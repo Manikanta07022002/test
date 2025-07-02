@@ -1,3 +1,15 @@
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: mysql-secret
+type: Opaque
+stringData:
+  MYSQL_DATABASE: "todo_management"
+  MYSQL_USER: "demo"
+  MYSQL_PASSWORD: "Veera0987"
+  MYSQL_ROOT_PASSWORD: "Veera0987"
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -19,22 +31,34 @@ spec:
         - containerPort: 8080
         env:
         - name: MYSQL_DATABASE
-          value: "todo_management"
+          valueFrom:
+            secretKeyRef:
+              name: mysql-secret
+              key: MYSQL_DATABASE
         - name: MYSQL_USER
-          value: "demo"
+          valueFrom:
+            secretKeyRef:
+              name: mysql-secret
+              key: MYSQL_USER
         - name: MYSQL_PASSWORD
-          value: "Veera0987"
+          valueFrom:
+            secretKeyRef:
+              name: mysql-secret
+              key: MYSQL_PASSWORD
         - name: MYSQL_ROOT_PASSWORD
-          value: "Veera0987"
+          valueFrom:
+            secretKeyRef:
+              name: mysql-secret
+              key: MYSQL_ROOT_PASSWORD
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: todo-app
+  name: todo-app-service
 spec:
   type: LoadBalancer
+  selector:
+    app: todo-app
   ports:
   - port: 80
     targetPort: 8080
-  selector:
-    app: todo-app
