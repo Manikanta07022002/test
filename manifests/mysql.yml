@@ -24,7 +24,7 @@ data:
       password varchar(20) DEFAULT NULL,
       PRIMARY KEY (id)
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-    
+
     CREATE TABLE todos (
       id bigint(20) NOT NULL AUTO_INCREMENT,
       description varchar(255) DEFAULT NULL,
@@ -51,48 +51,48 @@ spec:
         app: mysql
     spec:
       containers:
-      - name: mysql
-        image: mysql:8.0.40
-        env:
-        - name: MYSQL_DATABASE
-          valueFrom:
-            secretKeyRef:
-              name: mysql-secret
-              key: MYSQL_DATABASE
-        - name: MYSQL_USER
-          valueFrom:
-            secretKeyRef:
-              name: mysql-secret
-              key: MYSQL_USER
-        - name: MYSQL_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: mysql-secret
-              key: MYSQL_PASSWORD
-        - name: MYSQL_ROOT_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: mysql-secret
-              key: MYSQL_ROOT_PASSWORD
-        ports:
-        - containerPort: 3306
-          name: mysql
-        volumeMounts:
-        - name: init-sql
-          mountPath: /docker-entrypoint-initdb.d
+        - name: mysql
+          image: mysql:8.0.40
+          env:
+            - name: MYSQL_DATABASE
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-secret
+                  key: MYSQL_DATABASE
+            - name: MYSQL_USER
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-secret
+                  key: MYSQL_USER
+            - name: MYSQL_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-secret
+                  key: MYSQL_PASSWORD
+            - name: MYSQL_ROOT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-secret
+                  key: MYSQL_ROOT_PASSWORD
+          ports:
+            - containerPort: 3306
+              name: mysql
+          volumeMounts:
+            - name: init-sql
+              mountPath: /docker-entrypoint-initdb.d
       volumes:
-      - name: init-sql
-        configMap:
-          name: init-sql-configmap
+        - name: init-sql
+          configMap:
+            name: init-sql-configmap
 ---
 apiVersion: v1
 kind: Service
 metadata:
   name: mysqldb
 spec:
-  ports:
-  - port: 3306
-    targetPort: 3306
   selector:
     app: mysql
+  ports:
+    - port: 3306
+      targetPort: 3306
   clusterIP: None
