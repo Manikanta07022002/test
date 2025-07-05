@@ -56,7 +56,7 @@ kind: Service
 metadata:
   name: todo-app
 spec:
-  type: NodePort
+  type: LoadBalancer
   selector:
     app: todo-app
   ports:
