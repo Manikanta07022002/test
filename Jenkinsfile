@@ -33,7 +33,7 @@ docker push 339712873615.dkr.ecr.ap-south-1.amazonaws.com/mani/todo-app:latest''
         export AWS_SECRET_ACCESS_KEY="$(echo ${CREDENTIALS} | jq -r '.Credentials.SecretAccessKey')"
         export AWS_SESSION_TOKEN="$(echo ${CREDENTIALS} | jq -r '.Credentials.SessionToken')"
         export AWS_EXPIRATION=$(echo ${CREDENTIALS} | jq -r '.Credentials.Expiration')
-        aws eks update-kubeconfig --name demo --region ap-south-1
+        aws eks update-kubeconfig --name test --region ap-south-1
         kubectl apply -f manifests/.
         kubectl get svc
         '''
