@@ -149,3 +149,9 @@ kubectl get pods
 kubectl get svc
 kubectl get ingress
 ```
+---
+###  Jenkins Pipeline
+![Jenkins Pipeline](outputs/jenkins.png)
+
+###  Login Page of TODO App
+![Login Page](outputs/finaloutput.png)
