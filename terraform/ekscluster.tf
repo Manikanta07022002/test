@@ -18,7 +18,7 @@ data "aws_subnets" "selected" {
 module "eks" {
   source                          = "terraform-aws-modules/eks/aws"
   version                         = "20.37.1"
-  cluster_name                    = "demo"
+  cluster_name                    = "test"
   cluster_version                 = "1.32"
   kms_key_deletion_window_in_days = 7
   create_kms_key                  = false
